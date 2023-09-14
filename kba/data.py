@@ -55,7 +55,7 @@ class DataRefresher:
         url = "http://10.1.0.41/api/remote/data/now"
         auth = {'Authorization': 'Bearer ba884eea-ceee-4921-baba-3ae63496d482'}
         reading = requests.get(url, headers=auth).json()
-        return reading["active_power_w"]
+        return reading["active_power_w"] / 10
     
     def get_current_slope(self, is_levering: bool) -> float:
         value = self.get_power_reading()
