@@ -1,12 +1,15 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+from kba.app import Application
+import uvicorn
 
-class MyResponse(BaseModel):
-    message: str = "Hello World"
+def main():
+    app = Application()
 
-app = FastAPI()
+    webcfg = uvicorn.Config(app.app, host="127.0.0.1", port=8080, log_level="info")
+    server = uvicorn.Server(webcfg)
+    server.run()
 
 
-@app.get("/")
-async def root() -> MyResponse:
-    return MyResponse()
+
+
+if __name__ == "__main__":
+    main()
