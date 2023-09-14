@@ -59,6 +59,14 @@ class DataRefresher:
             return max(0, value)
         else:
             return min(0, value)
+    
+    def get_monthly_slope(self) -> float:
+        today = pd.Timestamp.now().floor("D")
+        start = today - pd.Timedelta(days=7)
+        end = today - pd.Timedelta(days=1)
+
+        slope = self.daily.loc[start:end, "netto"].mean()
+        return round(slope, 2)
 
     def get_daily_usage(self, is_levering: bool) -> GraphData:
         column_name = "levering" if is_levering else "teruglevering"
@@ -73,7 +81,7 @@ class DataRefresher:
     def get_monthly_total(self):
         return GraphData(
             goal=self.get_monthly_goal(),
-            slope=10.0,
+            slope=self.get_monthly_slope(),
             history=self.get_monthly_history(),
             unit=Unit.kWh
         )
