@@ -1,4 +1,5 @@
 from kba.app import Application
+from kba.data import DataRefresher
 import uvicorn
 
 def main():
@@ -7,6 +8,11 @@ def main():
     webcfg = uvicorn.Config(app.app, host="127.0.0.1", port=8080, log_level="info")
     server = uvicorn.Server(webcfg)
     server.run()
+
+    # data = DataRefresher()
+    # data.run()
+
+    # print(data.get_data().model_dump_json())
 
 
 
