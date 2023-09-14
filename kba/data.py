@@ -11,7 +11,7 @@ class DataRefresher:
         self.daily = pd.read_csv("data/sept_daily.csv", index_col=0)
         self.daily.index = pd.to_datetime(self.daily.index)
 
-        self.hourly = pd.read_csv("data/sept_hourly.csv", index_col=0)
+        self.hourly = pd.read_csv("data/lol.csv", index_col=0)
         self.hourly.index = pd.to_datetime(self.hourly.index)
 
     def get_daily_goal(self, column_name: str) -> float:
