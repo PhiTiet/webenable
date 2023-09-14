@@ -1,5 +1,6 @@
 from .data import DataRefresher
 from fastapi import FastAPI, APIRouter
+from fastapi.responses import FileResponse
 from .model import DashboardResponse
 
 from contextlib import asynccontextmanager
@@ -21,6 +22,13 @@ class Application:
             summary="Root"
         )
 
+        self.router.add_api_route(
+            path="/favicon.ico",
+            endpoint=self.favicon,
+            methods=["GET"],
+            include_in_schema=False
+        )
+
         self.app.include_router(self.router)
 
     @asynccontextmanager
@@ -31,3 +39,6 @@ class Application:
 
     async def get_data(self) -> DashboardResponse:
         return self.data_refresher.get_data()
+    
+    async def favicon(self):
+        return FileResponse("data/favicon.png")
