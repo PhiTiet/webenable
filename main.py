@@ -4,7 +4,7 @@ import uvicorn
 def main():
     app = Application()
 
-    webcfg = uvicorn.Config(app.app, host="localhost", port=8080, log_level="info")
+    webcfg = uvicorn.Config(app.app, host="10.1.0.80", port=8080, log_level="info")
     server = uvicorn.Server(webcfg)
     server.run()
 
