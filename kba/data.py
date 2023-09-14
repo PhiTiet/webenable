@@ -1,4 +1,5 @@
 import pandas as pd
+import requests
 
 from .model import DashboardResponse, GraphData, Datapoint, Unit
 
@@ -16,7 +17,7 @@ class DataRefresher:
     def get_daily_goal(self, column_name: str) -> float:
         current_month = pd.Timestamp.now().month
         goal = self.goals.loc[current_month, column_name]
-        return round(goal, 2)
+        return round(goal * 1000, 2)
     
     def get_monthly_goal(self) -> float:
         current_month = pd.Timestamp.now().month
@@ -51,7 +52,10 @@ class DataRefresher:
         ]
     
     def get_power_reading(self) -> float:
-        return 10.0
+        url = "http://10.1.0.41/api/remote/data/now"
+        auth = {'Authorization': 'Bearer ba884eea-ceee-4921-baba-3ae63496d482'}
+        reading = requests.get(url, headers=auth).json()
+        return reading["active_power_w"]
     
     def get_current_slope(self, is_levering: bool) -> float:
         value = self.get_power_reading()
